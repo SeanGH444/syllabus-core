@@ -1,0 +1,47 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const path = require("path");
+const mysql = require("mysql2/promise");
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET || "capstone-secret",
+		resave: false,
+		saveUninitialized: false,
+		cookie: { maxAge: 24 * 60 * 60 * 1000 },
+	}),
+);
+
+const uploadsDir = path.join(__dirname, process.env.UPLOAD_DIR || "uploads");
+app.use("/uploads", express.static(uploadsDir));
+
+const pool = mysql.createPool({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME,
+	waitForConnections: true,
+	connectionLimit: 10,
+});
+
+app.locals.db = pool;
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/users"));
+app.use("/api/syllabi", require("./routes/syllabi"));
+app.use("/api/curriculum", require("./routes/curriculum"));
+app.use("/api/logs", require("./routes/logs"));
+app.use("/api/messages", require("./routes/messages"));
+app.use("/api/mapping", require("./routes/mapping"));
+
+app.listen(PORT, () => {
+	console.log(`Server running on http://localhost:${PORT}`);
+});

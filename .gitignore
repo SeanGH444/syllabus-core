@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+server/.env
+
+# Build output
+dist/
+build/
+
+# SQLite database files (keep server/db source files tracked)
+*.sqlite
+*.sqlite3
+*.db
+!server/db/
+
+# User uploads
+server/uploads/
+
+# Logs
+*.log
+npm-debug.log*
+bun-debug.log*
+
+# Testing / coverage
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Temp files
+*.tmp
+*.temp
+*.bak
