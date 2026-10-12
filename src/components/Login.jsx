@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import StudentRegister from './StudentRegister';
 
 
 export default function Login({ onLogin }) {
+  const [mode, setMode] = useState('login');
   const [form, setForm] = useState({ user: '', pass: '' });
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
@@ -24,6 +26,9 @@ export default function Login({ onLogin }) {
         </div>
       </section>
       <section className="login-panel">
+        {mode === 'register' ? (
+          <StudentRegister onBack={() => setMode('login')} />
+        ) : (
         <form className="login-card" onSubmit={submit}>
           <img className="login-logo" src="/cite-logo.png" alt="College logo" />
           <span className="eyebrow">WELCOME BACK</span>
@@ -34,11 +39,15 @@ export default function Login({ onLogin }) {
           <div className="login-options"><label className="check"><input type="checkbox" /> Remember me</label><button type="button" className="link-btn">Forgot password?</button></div>
           {error && <div className="form-error">{error}</div>}
           <button className="btn primary wide" type="submit">Sign In</button>
+          <div className="register-cta">
+            <button className="btn outline wide" type="button" onClick={() => setMode('register')}>Register (for Students)</button>
+          </div>
           {/* <div className="or"><span />or<span /></div>
           <button className="btn outline wide" type="button" onClick={() => { onLogin('admin@university.edu.ph', 'admin123'); }}>Enter Demo System</button> */}
           <div className="demo-accounts"><small>Demo accounts — <button type="button" onClick={() => fill('admin@university.edu.ph', 'admin123')}>admin@university.edu.ph / admin123</button> · <button type="button" onClick={() => fill('faculty@university.edu.ph', 'faculty123')}>faculty@university.edu.ph / faculty123</button></small></div>
           {/* <small>Front-end prototype • No live authentication</small> */}
         </form>
+        )}
       </section>
     </div>
   );

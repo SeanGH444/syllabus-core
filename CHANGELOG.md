@@ -249,3 +249,31 @@ src/
 - Added "+ Add User" form with email, password, name, and role fields
 - Added delete button per user
 - Removed all hardcoded mock user data
+
+---
+
+### v1.13.0 — Student Registration (UI)
+**By:** Raymond  
+**Date:** October 12, 2026
+
+**Login Page:**
+- Added "Register (for Students)" button below the Sign In form
+- Added login/register mode toggle within the login page (no separate route)
+
+**Student Registration Form (`StudentRegister.jsx`):**
+- Added username field (student ID format)
+- Added password field with show/hide toggle
+- Added Certificate of Registration (COR) drag-and-drop upload zone
+- COR upload restricted to image files (enables camera capture on mobile devices)
+- Added form validation — username, password, and COR file are all required
+- Added registration success state with "Registration Received" confirmation and back-to-sign-in button
+
+**Animations & Styling:**
+- Added cardIn entrance animation (fade + slide-up) on the registration form
+- Added popIn bounce animation on the success checkmark
+- Added hover lift effect on the register button
+- Added compact dropzone variant (`.dropzone.compact`) for the COR upload
+
+**Notes:**
+- Frontend-only for now — no backend wiring; COR file is held in component state, ready for FormData integration
+- Mobile-responsive layout for login/register was prototyped and removed (desktop layout remains as-is)
